@@ -20,7 +20,9 @@ g <- ggplot(df, aes(y = organ, x = TPM,fill = organ)) +
     #theme要調整
     theme_classic() +
     theme(
-        axis.title.y = element_blank()
-        )
+        axis.title.y = element_blank(),
+        text = element_text(size = 18)
+        ) +
+    scale_fill_brewer(palette = "Pastel1")
 
 ggsave("output/presentation/mammal_organ_expression.pdf",plot = g)

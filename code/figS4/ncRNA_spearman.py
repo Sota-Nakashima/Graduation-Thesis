@@ -21,4 +21,4 @@ plt.ylabel("Spearmans'ρ",fontsize = "14")
 plt.title("ncRNA",fontsize="18")
 #保存
 #bbox_inchesはタイトルの見切れ防止
-plt.savefig("output/figS3/ncRNA_spearman.pdf",bbox_inches='tight')
+plt.savefig("output/figS4/ncRNA_spearman.pdf",bbox_inches='tight')
