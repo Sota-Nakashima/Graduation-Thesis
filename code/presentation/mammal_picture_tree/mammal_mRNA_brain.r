@@ -1,3 +1,6 @@
+#初期化
+rm(list = ls())
+
 #パッケージのインストール
 library(ape)
 library(ggtree)
@@ -33,12 +36,12 @@ g <- ggtree(tree) +
     geom = "image",
     size=.24,
     #画像の位置調整
-    offset = .24,
+    offset = .40,
     align = T) +
     #ブートストラップ値
     geom_nodelab(
     size = 7,
-    nudge_x = -tree_limit[2] * 0.06,#数字の位置調整
+    nudge_x = -tree_limit[2] * 0.1,#数字の位置調整
     nudge_y = tree_limit[2] * 0.4) +
     #名前を付加
     geom_tiplab(
@@ -53,14 +56,14 @@ g <- ggtree(tree) +
         show.legend = FALSE) +
     geom_highlight(
         node = 5,fill = "#FF5050",
-        extend = .28
+        extend = .457
         ) + 
     geom_highlight(
         node = 5,fill = "#FF5050",
         extend = -.11
         ) +
     scale_x_continuous(
-        limits = c(-tree_limit[2] * 0.06,tree_limit[2]*2)
+        limits = c(-tree_limit[2] * 0.11,tree_limit[2]*2.5)
         ) + #描画範囲調整
     annotate(
             "text",x = -Inf,y = Inf,label = "brain",

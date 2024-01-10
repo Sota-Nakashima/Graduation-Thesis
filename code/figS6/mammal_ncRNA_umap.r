@@ -1,27 +1,54 @@
+#初期化
+rm(list = ls())
+
 #ライブラリの読み込み
 library(tidyverse)
+library(umap)
 library(RColorBrewer)
+library(RMySQL)
+library(DBI)
+library(ConfigParser)
 
 #シード値の設定
 set.seed(1234)
 
-#データの読み込み
-#あとでMySQL仕様に変更
-df <- read_delim("data/tmp/mammal.csv",delim = ";")
-df <- df %>% filter(set == "lincs") %>%
-    select(c(id,species,brain,heart,kidney,liver,testes)) %>%
-    pivot_longer(cols = -c(id,species),names_to = "Organism") %>%
+#db接続
+password_config <- read.ini('password.ini') #パスワードファイルの読み込み
+password <- password_config$development$password
+con <- dbConnect(
+        user = 'nakashima',
+        MySQL(),
+        password = password,
+        dbname = 'nakashima_db',
+        host = 'localhost',
+        port = 3306
+)
+
+#コマンド作成
+command <- readLines('data/sql/figS6_mammal_ncRNA.sql')
+command <- command[!grepl("^-",command)]
+command <-  paste(command,collapse = "")
+
+#データの取得&前処理
+df_raw <- as_tibble(dbGetQuery(con,command)) %>%
+    pivot_longer(
+        cols = -c("id","species"),
+        names_to = "Organism"
+        ) %>%
     pivot_wider(names_from = id,values_from = value) %>%
     select(where(~all(!is.na(.))))
 
-df_index <- df %>% select(Organism,species)
-df_value <- df %>% select(-Organism,-species) %>% select_if(~sum(.) != 0)
+dbDisconnect(con) #dbとの接続解除
+
+df_index <- df_raw %>% select(Organism,species)
+df_value <- df_raw %>% select(-Organism,-species) %>% select_if(~sum(.) != 0)
 
 #計算
 umap_result <- umap(df_value)
 
 #結果を取り出してlegendフレームと結合
-umap_df <- as_tibble(umap_result$layout) %>% bind_cols(df_index)
+umap_df <- as_tibble(umap_result$layout) %>%
+    bind_cols(df_index)
 
 #描写
 g <- ggplot(umap_df,aes(x = V1,y = V2,color = Organism)) +

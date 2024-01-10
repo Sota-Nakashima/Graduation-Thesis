@@ -1,9 +1,15 @@
+#初期化
+rm(list = ls())
+
 #ライブラリの読み込み
 library(ape)
 library(ggtree)
 library(tidyverse)
 library(parallel)
 library(RColorBrewer)
+library(RMySQL)
+library(DBI)
+library(ConfigParser)
 
 #シード値の設定
 set.seed(1234)
@@ -25,17 +31,35 @@ color_list <- list(
     "NG" = "red"
 )
 
-#データの読み込み
-#あとでMySQL仕様に変更
-df <- read_delim("data/tmp/mammal.csv",delim = ";")
-df <- df %>% filter(set == "lincs") %>%
-    select(c(id,species,brain,heart,kidney,liver,testes)) %>%
-    pivot_longer(cols = -c(id,species),names_to = "Organism") %>%
-    pivot_wider(names_from = id,values_from = value) %>%
-    select(where(~all(!is.na(.))))
+#db接続
+password_config <- read.ini('password.ini') #パスワードファイルの読み込み
+password <- password_config$development$password
+con <- dbConnect(
+        user = 'nakashima',
+        MySQL(),
+        password = password,
+        dbname = 'nakashima_db',
+        host = 'localhost',
+        port = 3306
+)
+
+#コマンド作成
+command <- readLines('data/sql/fig2.sql')
+command <- command[!grepl("^-",command)]
+command <-  paste(command,collapse = "")
+
+#データの取得&前処理
+df_raw <- as_tibble(dbGetQuery(con,command)) %>%
+    pivot_longer(
+        cols = -c("id","species"),
+        names_to = "Organism"
+        )
+
+dbDisconnect(con) #dbとの接続解除
 
 for (organism in organism_list) {
-    df_organism <- df %>% filter(Organism == organism)
+    df_organism <- df_raw %>% filter(Organism == organism) %>%
+    select(-Organism) %>% pivot_wider(names_from = id,values_from = value)
     df_index <- df_organism %>% select(species) %>%
         mutate(
             species = case_when(
@@ -48,7 +72,7 @@ for (organism in organism_list) {
                 TRUE ~ "unknown  "
             )
         )
-    df_value <- df_organism %>% select(-c(species,Organism))
+    df_value <- df_organism %>% select(-c(species))
 
     #ブート無しのツリー作成
     tree <- tree_function(df_value)
@@ -88,7 +112,7 @@ for (organism in organism_list) {
     branch_sum <- sum(tree$edge.length)
     tree$edge.length <- tree$edge.length/branch_sum
     #描写範囲取得
-    tree_limit <- plot(tree)$x.lim
+    tree_limit <- plot(tree)$x.lim #X11が起動しちゃうかも
     #プレゼン用にnewick形式として保存
     write.tree(
         tree,

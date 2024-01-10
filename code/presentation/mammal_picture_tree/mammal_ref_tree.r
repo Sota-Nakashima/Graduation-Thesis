@@ -1,3 +1,6 @@
+#初期化
+rm(list = ls())
+
 #パッケージのインストール
 library(ape)
 library(ggtree)

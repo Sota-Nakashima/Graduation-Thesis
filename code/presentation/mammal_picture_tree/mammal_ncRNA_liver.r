@@ -1,3 +1,6 @@
+#初期化
+rm(list = ls())
+
 #パッケージのインストール
 library(ape)
 library(ggtree)
@@ -24,7 +27,6 @@ image_df <- tibble(
     #パス名に変換
     mutate(image_path = paste0(image_dir,image_path, ".jpeg"))
 tree <- full_join(tree, image_df, by="node")
-print(tree)
 
 #論文用のツリーの描写
 g <- ggtree(tree) + 
@@ -34,12 +36,12 @@ g <- ggtree(tree) +
     geom = "image",
     size=.24,
     #画像の位置調整
-    offset = .18,
+    offset = .37,
     align = T) +
     #ブートストラップ値
     geom_nodelab(
     size = 7,
-    nudge_x = -tree_limit[2] * 0.06,#数字の位置調整
+    nudge_x = -tree_limit[2] * 0.1,#数字の位置調整
     nudge_y = tree_limit[2] * 0.4) +
     #名前を付加
     geom_tiplab(
@@ -53,7 +55,7 @@ g <- ggtree(tree) +
         label.r =  unit(0, "lines"),
         show.legend = FALSE) +
     scale_x_continuous(
-        limits = c(-tree_limit[2] * 0.06,tree_limit[2]*2)
+        limits = c(-tree_limit[2] * 0.11,tree_limit[2]*2.5)
         ) + #描画範囲調整
     annotate(
             "text",x = -Inf,y = Inf,label = "liver",

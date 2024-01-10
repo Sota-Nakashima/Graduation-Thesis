@@ -1,3 +1,6 @@
+#初期化
+rm(list = ls())
+
 #ライブラリの読み込み
 library(ape)
 library(ggtree)

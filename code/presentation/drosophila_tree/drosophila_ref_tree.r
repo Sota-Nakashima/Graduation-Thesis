@@ -1,3 +1,6 @@
+#初期化
+rm(list = ls())
+
 #ライブラリの読み込み
 library(ape)
 library(ggtree)
@@ -12,7 +15,7 @@ tree_limit <- plot(tree)$x.lim
 tree$tip.label <- c(
     "D.wil     ",
     "D.ana     ",
-    "D.sec     ",
+    "D.sim     ",
     "D.mel     ",
     "D.yak     ",
     "D.pse     "
@@ -23,7 +26,7 @@ cols <- brewer.pal(6, "Pastel1")
 color_list <- list(
     "wil" = cols[1],
     "ana" = cols[2],
-    "sec" = cols[3],
+    "sim" = cols[3],
     "mel" = cols[4],
     "yak" = cols[5],
     "pse" = cols[6]
@@ -33,7 +36,7 @@ color_list <- list(
 color_df <- tibble(
     node=1:(Nnode(tree) + Ntip(tree)),
     #ノードの行はnonで埋める
-    color = c("wil","ana","sec","mel","yak","pse",c(rep("non", Nnode(tree))))
+    color = c("wil","ana","sim","mel","yak","pse",c(rep("non", Nnode(tree))))
     )
 tree <- full_join(tree, color_df, by="node")
 

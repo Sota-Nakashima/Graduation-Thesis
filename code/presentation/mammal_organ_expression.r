@@ -1,14 +1,35 @@
+#初期化
+rm(list = ls())
+
 #ライブラリの読み込み
 library(tidyverse)
+library(RMySQL)
+library(DBI)
+library(ConfigParser)
 
-#データの読み込み
-#あとでSQLから読み込める用に変更
-df <- read_delim("data/tmp/mammal.csv",delim = ";")
+#db接続
+password_config <- read.ini('password.ini') #パスワードファイルの読み込み
+password <- password_config$development$password
+con <- dbConnect(
+        user = 'nakashima',
+        MySQL(),
+        password = password,
+        dbname = 'nakashima_db',
+        host = 'localhost',
+        port = 3306
+)
 
-df <- df %>%
-    #ヒトデータを抜き出す
-    filter(species == "hg19" & set == "coding") %>%
-    select("id","brain","heart","kidney","liver","testes") %>%
+#コマンド作成
+command <- readLines('data/sql/presentation/mammal_organ_expression.sql')
+command <- command[!grepl("^-",command)]
+command <-  paste(command,collapse = "")
+
+#データの取得
+df_raw <- as_tibble(dbGetQuery(con,command))
+
+dbDisconnect(con) #dbとの接続解除
+
+df <- df_raw %>%
     #melt
     pivot_longer(cols = -id,names_to = "organ",values_to = "TPM")
 
