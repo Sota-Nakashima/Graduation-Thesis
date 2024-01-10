@@ -157,7 +157,7 @@ for (organism in organism_list) {
     #保存
     ggsave(
         paste0("output/fig2/tree/mammal_ncRNA_",organism,".pdf"),
-        plot = g
+        plot = g,width = 7,width = 7
         )
 }
 

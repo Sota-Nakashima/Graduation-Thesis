@@ -68,4 +68,6 @@ g <- ggtree(tree) +
         ) #器官のタイトル
 
 #保存
-ggsave("output/presentation/drosophila_tree/drosophila_mRNA_head.pdf",plot = g)
+ggsave(
+    "output/presentation/drosophila_tree/drosophila_mRNA_head.pdf",plot = g,
+    width = 10.1,height = 10.1)

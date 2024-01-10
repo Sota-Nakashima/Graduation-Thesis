@@ -56,7 +56,7 @@ g <- ggtree(tree) +
         show.legend = FALSE) +
     geom_highlight(
         node = 5,fill = "#FF5050",
-        extend = .457
+        extend = .34
         ) + 
     geom_highlight(
         node = 5,fill = "#FF5050",
@@ -73,5 +73,5 @@ g <- ggtree(tree) +
 #保存
 ggsave(
     "output/presentation/mammal_picture_tree/mammal_mRNA_brain.pdf",
-    plot = g
+    plot = g,width = 10.1,height = 10.1
     )

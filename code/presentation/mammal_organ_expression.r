@@ -46,4 +46,6 @@ g <- ggplot(df, aes(y = organ, x = TPM,fill = organ)) +
         ) +
     scale_fill_brewer(palette = "Pastel1")
 
-ggsave("output/presentation/mammal_organ_expression.pdf",plot = g)
+ggsave(
+    "output/presentation/mammal_organ_expression.pdf",plot = g,
+    width = 7,height = 7)

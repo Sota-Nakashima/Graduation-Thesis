@@ -65,5 +65,5 @@ g <- ggtree(tree) +
 #保存
 ggsave(
     "output/presentation/mammal_picture_tree/mammal_ncRNA_liver.pdf",
-    plot = g
+    plot = g,width = 10.1,height = 10.1
     )

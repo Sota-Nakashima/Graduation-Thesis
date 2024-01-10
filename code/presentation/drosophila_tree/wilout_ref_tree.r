@@ -67,4 +67,6 @@ g <- ggtree(tree) +
     scale_fill_manual(values = color_list) #色の調整
 
 #保存
-ggsave("output/presentation/drosophila_tree/wilout_ref_tree.pdf",plot = g)
+ggsave(
+    "output/presentation/drosophila_tree/wilout_ref_tree.pdf",plot = g,
+    width = 10.1,height = 10.1)

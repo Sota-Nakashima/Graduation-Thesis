@@ -48,4 +48,6 @@ g <- ggtree(tree) +
     scale_x_continuous(limits = c(0,tree_limit[2]* 0.85)) #描画範囲調整
 
 #保存
-ggsave("output/presentation/mammal_picture_tree/mammal_preref.pdf",plot = g)
+ggsave(
+    "output/presentation/mammal_picture_tree/mammal_preref.pdf",plot = g,
+    width = 10.1,height = 10.1)

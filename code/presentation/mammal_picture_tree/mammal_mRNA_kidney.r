@@ -49,5 +49,5 @@ g <- ggtree(tree,size = 1.5) +
 #保存
 ggsave(
     "output/presentation/mammal_picture_tree/mammal_mRNA_kidney.pdf",
-    plot = g
+    plot = g,width = 7,height = 7
     )

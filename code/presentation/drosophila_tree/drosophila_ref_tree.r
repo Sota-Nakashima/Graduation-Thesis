@@ -58,4 +58,6 @@ g <- ggtree(tree) +
     scale_fill_manual(values = color_list)
 
 #保存
-ggsave("output/presentation/drosophila_tree/drosophila_ref.pdf",plot = g)
+ggsave(
+    "output/presentation/drosophila_tree/drosophila_ref.pdf",plot = g,
+    width = 10.1,height = 10.1)

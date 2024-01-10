@@ -138,4 +138,6 @@ g <- ggplot(umap_df,aes(x = V1,y = V2,color = source_name)) +
         plot.title = element_text(hjust = 0.5)
     )
 #保存
-ggsave("output/figS6/drosophila_mRNA.pdf",plot = g)
+ggsave(
+    "output/figS6/drosophila_mRNA.pdf",plot = g,
+    width = 7,height = 7)

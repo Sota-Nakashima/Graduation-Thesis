@@ -222,6 +222,6 @@ for (organism in organism_list){
 
     ggsave(
         paste0("output/fig3/tree/drosophila_mRNA_",organism,".pdf"),
-        plot = g
+        plot = g,width = 7,height = 7
         )
 }

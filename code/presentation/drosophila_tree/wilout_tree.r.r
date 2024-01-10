@@ -8,17 +8,16 @@ library(tidyverse)
 library(RColorBrewer)
 
 #newick形式ファイルの読み込み
-tree <- read.tree("output/fig4/nwk/drosophila_ncRNA_gonad.nwk")
+tree <- read.tree("output/figS5/nwk/wilout_mRNA_head.nwk")
 #描写範囲取得
 tree_limit <- plot(tree)$x.lim
 #ラベルのズレを調整
 tree$tip.label <- c(
-    "D.sim     ",
-    "D.pse     ",
-    "D.mel     ",
-    "D.yak     ",
     "D.ana     ",
-    "D.wil     "
+    "D.sim     ",
+    "D.yak     ",
+    "D.mel     ",
+    "D.pse     "
 )
 
 #色の指定
@@ -36,7 +35,7 @@ color_list <- list(
 color_df <- tibble(
     node=1:(Nnode(tree) + Ntip(tree)),
     #ノードの行はnonで埋める
-    color = c("sim","pse","mel","yak","ana","wil",c(rep("non", Nnode(tree))))
+    color = c("ana","sim","yak","mel","pse",c(rep("non", Nnode(tree))))
     )
 tree <- full_join(tree, color_df, by="node")
 
@@ -63,11 +62,11 @@ g <- ggtree(tree) +
         limits = c(-tree_limit[2] * 0.06,tree_limit[2] * 1.4)) +
     scale_fill_manual(values = color_list) +
     annotate(
-        "text",x = -Inf,y = Inf,label = "gonad",
+        "text",x = -Inf,y = Inf,label = "head",
         hjust = -.2,vjust = 2,size = 9
         ) #器官のタイトル
 
 #保存
 ggsave(
-    "output/presentation/drosophila_tree/drosophila_ncRNA_gonad.pdf",plot = g,
+    "output/presentation/drosophila_tree/wilout_tree.pdf",plot = g,
     width = 10.1,height = 10.1)

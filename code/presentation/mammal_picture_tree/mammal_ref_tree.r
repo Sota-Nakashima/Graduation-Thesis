@@ -35,10 +35,12 @@ g <- ggtree(tree) +
     geom = "image",
     size=.24,
     #画像の位置調整
-    offset = 100) +
+    offset = 125) +
     #名前を付加
     geom_tiplab(size = 18) + #名前ラベル
     scale_x_continuous(limits = c(0,tree_limit[2]*2)) #描画範囲調整
 
 #保存
-ggsave("output/presentation/mammal_picture_tree/mammal_ref.pdf",plot = g)
+ggsave(
+    "output/presentation/mammal_picture_tree/mammal_ref.pdf",plot = g,
+    width = 10.1,height = 10.1)
