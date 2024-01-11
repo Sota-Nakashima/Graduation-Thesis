@@ -126,7 +126,6 @@ df <- inner_join(df_raw,idx_raw,by = "Run") %>% select(-Run)
 dbDisconnect(con)
 rm(idx_raw,df_raw)
 
-print(df %>% select(Organism) %>% unique())
 for (organism in organism_list){
     #Organismごとにデータの切り出し
     df_organism <- df %>% filter(source_name == organism) %>%
@@ -140,8 +139,7 @@ for (organism in organism_list){
     df_index <- df_group_median %>% select(Organism) %>%
         mutate(Organism = paste0(Organism, "  ")) #ラベルの位置調整
     #発現量
-    df_value <- df_group_median %>% select(-Organism) %>%
-        apply(1,normalize_func) %>% t() %>% as_tibble() #正規化
+    df_value <- df_group_median %>% select(-Organism)
 
     #ブート無しのツリー作成
     tree <- tree_function(df_value)

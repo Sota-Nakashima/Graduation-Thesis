@@ -139,8 +139,7 @@ for (organism in organism_list){
     df_index <- df_group_median %>% select(Organism) %>%
         mutate(Organism = paste0(Organism, "  ")) #ラベルの位置調整
     #発現量
-    df_value <- df_group_median %>% select(-Organism) %>%
-        apply(1,normalize_func) %>% t() %>% as_tibble() #正規化
+    df_value <- df_group_median %>% select(-Organism)
 
     #ブート無しのツリー作成
     tree <- tree_function(df_value)
