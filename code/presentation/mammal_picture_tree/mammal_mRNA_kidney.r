@@ -29,7 +29,9 @@ image_df <- tibble(
 tree <- full_join(tree, image_df, by="node")
 
 #論文用のツリーの描写
-g <- ggtree(tree,size = 1.5) + 
+g <- ggtree(
+    tree,size = 1.5,branch.length = "none" #末端を揃える
+    ) + 
     #写真を付加
     geom_tiplab(
     aes(image = image_path),
@@ -39,7 +41,7 @@ g <- ggtree(tree,size = 1.5) +
     offset = .1,
     align = T) +
     scale_x_continuous(
-        limits = c(-tree_limit[2] * 0.11,tree_limit[2]*1.4)
+        limits = c(0,4.5)
         ) + #描画範囲調整
     annotate(
             "text",x = -Inf,y = Inf,label = "kidney",
