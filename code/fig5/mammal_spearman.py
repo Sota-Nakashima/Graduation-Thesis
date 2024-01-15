@@ -7,12 +7,12 @@ import matplotlib.pyplot as plt
 df = pd.read_csv("data/csv/spearman.csv")
 
 #mammalのデータのみ抜き出す
-df_pict = df[df["organ"] == "mammal"]
+df_pict = df[df["taxon"] == "mammal"]
 
 #信頼区間つき折れ線グラフ
 sns.relplot(
-    x = "Mya",y = "value",
-    data=df_pict,kind="line",hue="kind",palette=["#0071BC","#FF5050"])
+    x = "year",y = "value",
+    data=df_pict,kind="line",hue="RNAkind",palette=["#0071BC","#FF5050"])
 
 #細かい調整
 plt.xticks([94,0,6.4,28.8,87],rotation=45) 
