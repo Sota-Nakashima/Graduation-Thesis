@@ -5,6 +5,7 @@ rm(list = ls())
 library(ape)
 library(ggtree)
 library(tidyverse)
+library(RColorBrewer)
 
 #画像のディレクトリ
 image_dir <- "data/picture/"
@@ -47,7 +48,7 @@ g <- ggtree(tree) +
     geom_tiplab(
         #色指定
         aes(fill = color),
-        size = 9,
+        size = 12,
         geom = "label",
         #余白を大きく
         label.padding = unit(0.5, "lines"),
