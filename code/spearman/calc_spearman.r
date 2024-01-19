@@ -167,8 +167,7 @@ tryCatch(
                 "digestive plus excretory system"
                 ~ "digestive",
                 source_name ==
-                "reproductive system without gonad and genitalia;
-                reproductive system without gonad"
+                "reproductive system without gonad and genitalia; reproductive system without gonad"
                 ~"reproductive system",
                 source_name ==
                 "reproductive system without gonad and genitalia"

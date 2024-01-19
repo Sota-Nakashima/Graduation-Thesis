@@ -76,8 +76,7 @@ idx_raw <- as_tibble(dbGetQuery(con,idx_command)) %>%
         "digestive plus excretory system"
         ~ "digestive",
         source_name ==
-        "reproductive system without gonad and genitalia;
-        reproductive system without gonad"
+        "reproductive system without gonad and genitalia; reproductive system without gonad"
         ~"reproductive system",
         source_name ==
         "reproductive system without gonad and genitalia"

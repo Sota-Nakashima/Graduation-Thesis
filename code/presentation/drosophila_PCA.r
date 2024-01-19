@@ -6,11 +6,14 @@ library(tidyverse)
 library(RMySQL)
 library(DBI)
 library(ConfigParser)
+library(scatterplot3d)
+library(animation)
 
 #シード値の設定
 set.seed(1234)
 
-organism_list <- c("abdomen","digestive","gonad","head","thorax")
+#色の指定
+colors <- scale_color_hue()$palette(9)
 
 #normailze関数
 normalize_func <- function(x) {
@@ -33,11 +36,11 @@ con <- dbConnect(
 )
 
 #コマンド作成
-idx_command <- readLines('data/sql/figS6_drosophila_idx.sql')
+idx_command <- readLines('data/sql/presentation/drosophila_PCA_idx.sql')
 idx_command <- idx_command[!grepl("^-",idx_command)]
 idx_command <-  paste(idx_command,collapse = "")
 
-df_command <- readLines('data/sql/figS6_drosophila_mRNA.sql')
+df_command <- readLines('data/sql/presentation/drosophila_PCA_df.sql')
 df_command <- df_command[!grepl("^-",df_command)]
 df_command <-  paste(df_command,collapse = "")
 
@@ -95,48 +98,62 @@ idx_raw <- as_tibble(dbGetQuery(con,idx_command)) %>%
         Organism == "Drosophila yakuba" ~ "D.yak",
         Organism == "Drosophila pseudoobscura" ~ "D.pse",
         TRUE ~ Organism
-        )
-        #使うデータだけ取る
-        ) %>% filter(source_name %in% organism_list)
+        ))
 
-df <- inner_join(df_raw,idx_raw,by = "Run") %>% select(-Run) %>%
-    select(where(~all(!is.na(.)))) %>%
-    #器官・種ごとにまとめて中央値を計算
-    group_by(Organism,source_name) %>%
-    summarise(across(where(is.numeric), median),.groups = "drop") #グループ化解除
+#データの結合&前処理
+df <- inner_join(df_raw,idx_raw,by = "Run") %>% #select(-Run) %>%
+    select(where(~all(!is.na(.)))) #欠損値を除く
 
 #dbとの接続解除&メモリの開放
 dbDisconnect(con)
 rm(idx_raw,df_raw)
 
-df_index <- df %>% select(c(Organism,source_name))
-df_value <- df %>% select(-c(Organism,source_name)) %>%
-    apply(1,normalize_func) %>% t() %>% as_tibble() #正規化
+#データの抽出
+df_index <- df %>% select(c(Organism,source_name,Run))
+df_value <- df %>% select(-c(Organism,source_name,Run)) %>%
+    apply(1,normalize_func) %>% t() %>% as_tibble() %>% #正規化
+    mutate_all(~ifelse(is.na(.), 0, .)) #NAを0にする
 
-#計算
-umap_result <- umap(df_value)
+#pcaの計算
+pca_result <- prcomp(df_value)
 
-#結果を取り出してlegendフレームと結合
-umap_df <- as_tibble(umap_result$layout) %>%
-    bind_cols(df_index)
+#後処理
+pca_df <- as_tibble(pca_result$x) %>% #結果の抽出
+    mutate_all(~sign(.) * log1p(abs(.))) %>% #neg-log変換
+    bind_cols(df_index) %>% #index列の結合
+    mutate(
+        colors = case_when(
+            source_name == "antenna" ~ colors[1],
+            source_name == "gonad" ~ colors[2],
+            source_name == "abdomen" ~ colors[3],
+            source_name == "digestive" ~ colors[4],
+            source_name == "head" ~colors[5],
+            source_name == "reproductive system" ~ colors[6],
+            source_name == "thorax" ~ colors[7],
+            source_name == "whole body" ~ colors[8],
+            source_name == "genitalia" ~ colors[9],
+            TRUE ~ source_name
+        )
+    ) #色のために番号分け
 
-#描写
-g <- ggplot(umap_df,aes(x = V1,y = V2,color = source_name)) +
-    geom_point(size = 3) +
-    stat_ellipse() + #確率楕円
-    theme_classic() +
-    labs(
-        x = "UMAP1",
-        y = "UMAP2",
-        color = "Organism",
-        title = "Drosophila",
-        caption = "mRNA"
-    ) +
-    theme(
-        text = element_text(size = 18),
-        plot.title = element_text(hjust = 0.5)
-    )
-#保存
-ggsave(
-    "output/figS6/drosophila_mRNA.pdf",plot = g,
-    width = 7,height = 7)
+#scatterplot3d(
+#    pca_df[,1:3],
+#    pch = 16,
+#    color = pca_df$colors,
+#    angle = 30
+#)
+plot3d360 <- function() {
+    for (i in 1:360)  {
+        scatterplot3d(
+            pca_df[,1:3],
+            pch = 16,
+            color = pca_df$colors,
+            main = i,
+            angle = i)
+    }
+}
+
+saveGIF(
+    plot3d360(),
+    movie.name = "output/presentation/animation_mRNA.gif",
+    interval=0.05,movietype="gif")
