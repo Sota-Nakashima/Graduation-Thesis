@@ -27,12 +27,12 @@ tree$tip.label <- c(
 #色の指定
 cols <- brewer.pal(6, "Pastel1")
 color_list <- list(
-    "cow" = cols[1],
-    "rat" = cols[2],
-    "mouse" = cols[3],
-    "human" = cols[4],
-    "chimp" = cols[5],
-    "macaque" = cols[6]
+    "human" = cols[1],
+    "chimp" = cols[2],
+    "macaque" = cols[3],
+    "cow" = cols[4],
+    "mouse" = cols[5],
+    "rat" = cols[6]
 )
 
 #phyloオブジェクトに色指定の列を追加
