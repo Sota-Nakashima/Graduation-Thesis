@@ -11,6 +11,15 @@ image_dir <- "data/picture/"
 
 #newick形式ファイルの読み込み
 tree <- read.tree("data/nwk/mammal_ref.nwk")
+#mouseとratの位置を交換
+tree$tip.label <- c(
+    "cow",
+    "mouse",
+    "rat",
+    "human",
+    "chimp",
+    "macaque"
+)
 #描写範囲取得
 tree_limit <- plot(tree)$x.lim
 #phyloオブジェクトに画像指定の列を追加
@@ -18,7 +27,7 @@ image_df <- tibble(
     node=1:(Nnode(tree) + Ntip(tree)),
     #ノードの行はnonで埋める
     image_path = c(
-        "cow","rat","mouse","human",
+        "cow","mouse","rat","human",
         "chimp","macaque",
         c(rep("non", Nnode(tree))))
     ) %>%
@@ -35,7 +44,7 @@ g <- ggtree(tree) +
     geom = "image",
     size=.24,
     #画像の位置調整
-    offset = 125) +
+    offset = 100) +
     #名前を付加
     geom_tiplab(size = 18) + #名前ラベル
     scale_x_continuous(limits = c(0,tree_limit[2]*2)) #描画範囲調整
