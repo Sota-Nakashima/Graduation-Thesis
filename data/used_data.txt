@@ -1,0 +1,8 @@
+gtf file
+46.9 MB
+LiftOver chain file
+345.8 MB
+reference genome file
+1187 MB
+read data
+7235 MB x 1080
