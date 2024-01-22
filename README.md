@@ -1,6 +1,6 @@
 卒論コード
 ====
-
+[![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://github.com/Sota-Nakashima/graduation_thesis/blob/master/LICENSE)
 #  概要
 コード・入出力データの保存リポジトリ 
 
@@ -10,7 +10,7 @@
 
 ## ライセンス
 
-[GPL v3](https://github.com/Sota-Nakashima/SSERAFIM/blob/main/LICENSE)
+[MIT](https://github.com/Sota-Nakashima/graduation_thesis/blob/master/LICENSE)
 
 ## 著者
 
