@@ -12,7 +12,7 @@ df_pict = df[df["taxon"] == "mammal"]
 #信頼区間つき折れ線グラフ
 sns.relplot(
     x = "year",y = "value",
-    data=df_pict,kind="line",hue="RNAkind",palette=["orange","yellowgreen"])
+    data=df_pict,kind="line",hue="RNAkind",palette=["#0071BC","#FF5050"])
 
 #細かい調整
 plt.xticks([94,0,6.4,28.8,87],rotation=45) 
