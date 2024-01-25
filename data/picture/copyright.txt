@@ -1,0 +1,12 @@
+copyright
+chiken...竹之内 惇
+platypus...Stefan Kraft
+opossum...Juan Tello
+macaque...Charles J. Sharp
+orangutan...Nehrams2020
+gorilla...Adrian Pingstone
+human...Kenneth Stamp
+chimp...Hans Hillewaert
+bonobo...Ltshears
+rat...Zeynel Cebeci
+cow...Kim Hansen
