@@ -37,14 +37,14 @@ tree <- full_join(tree, image_df, by="node")
 
 
 #論文用のツリーの描写
-g <- ggtree(tree) + 
+g <- ggtree(tree,size = 1.5) + 
     #写真を付加
     geom_tiplab(
     aes(image = image_path),
     geom = "image",
     size=.24,
     #画像の位置調整
-    offset = 100) +
+    offset = 120) +
     #名前を付加
     geom_tiplab(size = 18) + #名前ラベル
     scale_x_continuous(limits = c(0,tree_limit[2]*2)) #描画範囲調整

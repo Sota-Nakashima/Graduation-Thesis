@@ -16,7 +16,7 @@ sns.relplot(
 
 #細かい調整
 plt.xticks([94,0,6.4,28.8,87],rotation=45) 
-plt.xlabel("MYA",fontsize = "14")
+plt.xlabel("Divergence Time (MYA)",fontsize = "14")
 plt.ylabel("Spearmans'ρ",fontsize = "14")
 plt.title("Mammal",fontsize="18")
 #保存

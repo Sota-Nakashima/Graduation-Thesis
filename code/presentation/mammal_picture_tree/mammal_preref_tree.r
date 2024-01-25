@@ -36,7 +36,7 @@ image_df <- tibble(
 tree <- full_join(tree, image_df, by="node")
 
 #論文用のツリーの描写
-g <- ggtree(tree) + 
+g <- ggtree(tree,size = 1.5) + 
     scale_y_reverse() + #反転
     #写真を付加
     geom_tiplab(

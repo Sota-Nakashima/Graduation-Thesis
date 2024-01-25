@@ -41,7 +41,7 @@ color_df <- tibble(
 tree <- full_join(tree, color_df, by="node")
 
 #描写
-g <- ggtree(tree) +
+g <- ggtree(tree,size = 1.5) +
     geom_tiplab(
         #色指定
         aes(fill = color),
@@ -54,7 +54,7 @@ g <- ggtree(tree) +
         #角を丸くしない
         label.r =  unit(0, "lines"),
         show.legend = FALSE) +
-    scale_x_continuous(limits = c(0,tree_limit[2] * 1.4)) +
+    scale_x_continuous(limits = c(0,tree_limit[2] * 1.2)) +
     scale_fill_manual(values = color_list)
 
 #保存

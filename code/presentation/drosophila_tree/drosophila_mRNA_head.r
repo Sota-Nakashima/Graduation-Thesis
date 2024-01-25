@@ -41,7 +41,7 @@ color_df <- tibble(
 tree <- full_join(tree, color_df, by="node")
 
 #描写
-g <- ggtree(tree) +
+g <- ggtree(tree,size = 1.5) +
     geom_tiplab(
         #色指定
         aes(fill = color),
@@ -64,7 +64,7 @@ g <- ggtree(tree) +
     scale_fill_manual(values = color_list) +
     annotate(
         "text",x = -Inf,y = Inf,label = "head",
-        hjust = -.2,vjust = 2,size = 9
+        hjust = -.2,vjust = 2,size = 14
         ) #器官のタイトル
 
 #保存

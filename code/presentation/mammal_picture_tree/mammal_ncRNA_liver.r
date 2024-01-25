@@ -29,14 +29,14 @@ image_df <- tibble(
 tree <- full_join(tree, image_df, by="node")
 
 #論文用のツリーの描写
-g <- ggtree(tree) + 
+g <- ggtree(tree,size = 1.5) + 
     #写真を付加
     geom_tiplab(
     aes(image = image_path),
     geom = "image",
     size=.24,
     #画像の位置調整
-    offset = .37,
+    offset = .30,
     align = T) +
     #ブートストラップ値
     geom_nodelab(
@@ -55,11 +55,11 @@ g <- ggtree(tree) +
         label.r =  unit(0, "lines"),
         show.legend = FALSE) +
     scale_x_continuous(
-        limits = c(-tree_limit[2] * 0.11,tree_limit[2]*2.5)
+        limits = c(-tree_limit[2] * 0.11,tree_limit[2]*2.3)
         ) + #描画範囲調整
     annotate(
             "text",x = -Inf,y = Inf,label = "liver",
-            hjust = -.2,vjust = 2,size = 9
+            hjust = -.2,vjust = 2,size = 14
         ) #器官のタイトル
 
 #保存

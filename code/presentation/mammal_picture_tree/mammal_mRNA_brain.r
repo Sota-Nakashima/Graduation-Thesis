@@ -29,14 +29,14 @@ image_df <- tibble(
 tree <- full_join(tree, image_df, by="node")
 
 #論文用のツリーの描写
-g <- ggtree(tree) + 
+g <- ggtree(tree,size = 1.5) + 
     #写真を付加
     geom_tiplab(
     aes(image = image_path),
     geom = "image",
     size=.24,
     #画像の位置調整
-    offset = .40,
+    offset = .27,
     align = T) +
     #ブートストラップ値
     geom_nodelab(
@@ -56,18 +56,18 @@ g <- ggtree(tree) +
         show.legend = FALSE) +
     geom_highlight(
         node = 5,fill = "#FF5050",
-        extend = .34
+        extend = .30
         ) + 
     geom_highlight(
         node = 5,fill = "#FF5050",
         extend = -.11
         ) +
     scale_x_continuous(
-        limits = c(-tree_limit[2] * 0.11,tree_limit[2]*2.5)
+        limits = c(-tree_limit[2] * 0.11,tree_limit[2]*2.0)
         ) + #描画範囲調整
     annotate(
             "text",x = -Inf,y = Inf,label = "brain",
-            hjust = -.2,vjust = 2,size = 9
+            hjust = -.2,vjust = 2,size = 14
         ) #器官のタイトル
 
 #保存

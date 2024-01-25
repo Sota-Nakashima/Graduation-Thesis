@@ -147,15 +147,19 @@ g <- ggplot(df_final,aes(x = Run,y = name,fill = value)) +
     theme_minimal() +
     theme(
         axis.ticks.x = element_blank(),
+        axis.title.x = element_text(size = 18),
         axis.text.x = element_text(
             angle = 30,size = 6,hjust = .5
             ),
-        axis.title.x = element_blank(),
         axis.ticks.y = element_blank(),
+        axis.title.y = element_text(size = 18),
         axis.text.y = element_text(size = 6),
-        axis.title.y = element_blank(),
         panel.grid=element_blank()
-        ) #テーマの手動設定
+        ) + #テーマの手動設定
+    labs(
+        x = "Gene",
+        y = "Sample"
+    )
 
 #保存
 ggsave("output/presentation/drosophila_heatmap.pdf",plot = g)
