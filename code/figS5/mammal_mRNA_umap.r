@@ -67,5 +67,5 @@ g <- ggplot(umap_df,aes(x = V1,y = V2,color = Organism)) +
     )
 #保存
 ggsave(
-    "output/figS6/mammal_mRNA.pdf",plot = g,
+    "output/figS5/mammal_mRNA.pdf",plot = g,
     width = 7,height = 7)

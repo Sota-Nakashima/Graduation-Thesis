@@ -181,7 +181,7 @@ for (organism in organism_list){
     #プレゼン用にnewick形式として保存
     write.tree(
         tree,
-        paste0("output/figS5/nwk/wilout_mRNA_",organism,".nwk")
+        paste0("output/figS4/nwk/wilout_mRNA_",organism,".nwk")
     )
 
     #ラベル背景の色指定用dataframe
@@ -221,7 +221,7 @@ for (organism in organism_list){
             ) #器官のタイトル
     #保存
     ggsave(
-        paste0("output/figS5/tree/wilout_mRNA_",organism,".pdf"),
+        paste0("output/figS4/tree/wilout_mRNA_",organism,".pdf"),
         plot = g,height = 7,width = 7
         )
 

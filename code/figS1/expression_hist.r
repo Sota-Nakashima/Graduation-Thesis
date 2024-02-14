@@ -60,5 +60,5 @@ g <- ggplot(
 
 #保存
 ggsave(
-    "output/figS2/expression_hist.pdf",plot = g,
+    "output/figS1/expression_hist.pdf",plot = g,
     width = 7,height = 7)

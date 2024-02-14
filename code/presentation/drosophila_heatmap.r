@@ -157,8 +157,8 @@ g <- ggplot(df_final,aes(x = Run,y = name,fill = value)) +
         panel.grid=element_blank()
         ) + #テーマの手動設定
     labs(
-        x = "Gene",
-        y = "Sample"
+        x = "Sample",
+        y = "Gene"
     )
 
 #保存

@@ -37,7 +37,7 @@ idx_command <- readLines('data/sql/figS6_drosophila_idx.sql')
 idx_command <- idx_command[!grepl("^-",idx_command)]
 idx_command <-  paste(idx_command,collapse = "")
 
-df_command <- readLines('data/sql/figS6_drosophila_ncRNA.sql')
+df_command <- readLines('data/sql/figS6_drosophila_mRNA.sql')
 df_command <- df_command[!grepl("^-",df_command)]
 df_command <-  paste(df_command,collapse = "")
 
@@ -111,7 +111,6 @@ rm(idx_raw,df_raw)
 
 df_index <- df %>% select(c(Organism,source_name))
 df_value <- df %>% select(-c(Organism,source_name)) %>%
-    select(where(~all(!is.na(.)))) %>%
     apply(1,normalize_func) %>% t() %>% as_tibble() #正規化
 
 #計算
@@ -131,7 +130,7 @@ g <- ggplot(umap_df,aes(x = V1,y = V2,color = source_name)) +
         y = "UMAP2",
         color = "Organism",
         title = "Drosophila",
-        caption = "ncRNA"
+        caption = "mRNA"
     ) +
     theme(
         text = element_text(size = 18),
@@ -139,5 +138,5 @@ g <- ggplot(umap_df,aes(x = V1,y = V2,color = source_name)) +
     )
 #保存
 ggsave(
-    "output/figS6/drosophila_ncRNA.pdf",plot = g,
-    height = 7,width = 7)
+    "output/figS5/drosophila_mRNA.pdf",plot = g,
+    width = 7,height = 7)
